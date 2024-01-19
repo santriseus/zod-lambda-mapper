@@ -9,7 +9,7 @@ Extends a [Zod](https://github.com/colinhacks/zod) schema with additional functi
 Zod is a peer dependency.
 
 ```shell
-npm install zod @santriseus/zod-openapi
+npm install zod @santriseus/zod-lambda-mapper
 ```
 
 ----

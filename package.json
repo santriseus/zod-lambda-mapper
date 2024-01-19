@@ -1,6 +1,6 @@
 {
   "name": "@santriseus/zod-lambda-mapper",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Use zod schema as mapper definition to extract data from aws lambda events",
   "repository": {
     "type": "git",

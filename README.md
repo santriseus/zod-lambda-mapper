@@ -2,8 +2,6 @@
 
 Extends a [Zod](https://github.com/colinhacks/zod) schema with additional functions allowing to declare mapping and extract required fields from AWS API Gateway Lambda Events `APIGatewayProxyEventV2`and `APIGatewayProxyEventV2WithJWTAuthorizer`
 
-----
-
 ## Installation
 
 Zod is a peer dependency.
@@ -11,8 +9,6 @@ Zod is a peer dependency.
 ```shell
 npm install zod @santriseus/zod-lambda-mapper
 ```
-
-----
 
 ## Usage
 

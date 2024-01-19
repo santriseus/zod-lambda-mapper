@@ -91,7 +91,7 @@ const extracted = extract(event, schema)
 
 This will extract  following object:
 
-```json
+```typescript
 {
   order: {
     customerId: "12345",

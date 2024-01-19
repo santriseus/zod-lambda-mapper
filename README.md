@@ -1,5 +1,7 @@
 # @santriseus/zod-lambda-mapper
 
+[![codecov](https://codecov.io/gh/santriseus/zod-lambda-mapper/graph/badge.svg?token=2Z44VWBUT3)](https://codecov.io/gh/santriseus/zod-lambda-mapper)
+
 Extends a [Zod](https://github.com/colinhacks/zod) schema with additional functions allowing to declare mapping and extract required fields from AWS API Gateway Lambda Events `APIGatewayProxyEventV2`and `APIGatewayProxyEventV2WithJWTAuthorizer`
 
 ## Installation

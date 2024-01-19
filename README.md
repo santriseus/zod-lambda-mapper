@@ -91,8 +91,8 @@ const extracted = extract(event, schema)
 
 This will extract  following object:
 
-```typescript
-{
+```javascript
+const extracted = {
   order: {
     customerId: "12345",
     orderId: "54321",
@@ -113,3 +113,4 @@ This will extract  following object:
   },
   comment: "some comment"
 }
+```

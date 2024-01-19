@@ -2,7 +2,7 @@
 Zop patching is heavily inspired by https://github.com/anatine/zod-plugins/blob/main/packages/zod-openapi/src/lib/zod-extensions.ts
  */
 import get from "lodash.get";
-import {AnyZodObject, never, string, unknown, z, ZodObject, ZodTypeAny} from "zod";
+import {AnyZodObject, z, ZodTypeAny} from "zod";
 import {ZodTypeDef} from "zod";
 import { APIGatewayProxyEventV2, APIGatewayProxyEventV2WithJWTAuthorizer} from "aws-lambda";
 

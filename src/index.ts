@@ -98,33 +98,39 @@ function extendLambdaEvent<T extends ExtendedZodTypeAny>(
 }
 export type SupportedEvents = APIGatewayProxyEventV2 | APIGatewayProxyEventV2WithJWTAuthorizer;
 
+type ExtractCache = {
+    body: unknown,
+}
+
 export function extract<T extends SupportedEvents>(
     event: T,
     zodRef: AnyZodObject
 ): unknown {
-    return extractObject(event, zodRef);
+    const cache: ExtractCache = { body: undefined };
+    return extractObject(event, zodRef, cache);
 }
 function extractObject<T extends SupportedEvents>(
     event: T,
-    zodRef: AnyZodObject
+    zodRef: AnyZodObject,
+    cache: ExtractCache
 ): unknown {
     if (isLambdaEventZodAnyObject(zodRef)) {
-        return extractSelf(event, zodRef);
+        return extractSelf(event, zodRef, cache);
     }else {
-        return extractShape(event, zodRef);
+        return extractShape(event, zodRef, cache);
     }
 }
-function extractSelf <T extends SupportedEvents>(event: T, zodRef: ExtendedAnyZodObject): unknown{
+function extractSelf <T extends SupportedEvents>(event: T, zodRef: ExtendedAnyZodObject, cache: ExtractCache): unknown{
     switch (zodRef.lambdaEventMapperOptions.source) {
         case 'body':
             if (!event.body) {
                 return undefined;
             }
-            const parsedBody = JSON.parse(event.body);
+            cache.body ??= JSON.parse(event.body);
             if (zodRef.lambdaEventMapperOptions.path) {
-                return get(parsedBody, zodRef.lambdaEventMapperOptions.path, undefined)
+                return get(cache.body, zodRef.lambdaEventMapperOptions.path, undefined)
             } else {
-                return parsedBody;
+                return cache.body;
             }
         case 'jwtClaims':
             if (isAPIGatewayProxyEventV2WithJWTAuthorizer(event)){
@@ -150,14 +156,14 @@ function extractSelf <T extends SupportedEvents>(event: T, zodRef: ExtendedAnyZo
     }
 }
 
-function extractShape<T extends SupportedEvents>( event: T, zodRef: AnyZodObject,) {
+function extractShape<T extends SupportedEvents>( event: T, zodRef: AnyZodObject, cache: ExtractCache) {
     if (!zodRef.shape){
         return undefined;
     }
     const extracted: { [key: string]: unknown } = {};
     const keys = Object.keys(zodRef.shape);
     for (const key of keys) {
-        let nested = extractObject(event, zodRef.shape[key])
+        let nested = extractObject(event, zodRef.shape[key], cache)
         if (nested !== undefined) {
             extracted[key] = nested;
         }

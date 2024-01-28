@@ -167,8 +167,8 @@ describe('Extract fromBody, fromQuery, fromParams, fromClaims', () => {
             expect(extracted).toEqual({...eventRawData, body: {objectValBody: {}}});
         });
     })
-    describe('Mixed mappings for readme example', () => {
-        it('Extract different combinations', async () => {
+    describe('Mixed mappings', () => {
+        it('Extract different combinations for readme', async () => {
             const schema = z.object({
                 order: z.object({
                     customerId: z.string().fromJwtClaims('uid'),
@@ -240,6 +240,20 @@ describe('Extract fromBody, fromQuery, fromParams, fromClaims', () => {
                 },
                 comment: "some comment",
             };
+
+            const extracted = extract(event as APIGatewayProxyEventV2WithJWTAuthorizer, schema)
+            expect(extracted).toEqual(expectedObject);
+        });
+        it('Extract name + optonal description', async () => {
+            const schema = z.object({
+                name: z.string(),
+                description: z.string().optional()
+            }).fromBody();
+            const event: RecursivePartial<APIGatewayProxyEventV2WithJWTAuthorizer> = {
+                body: JSON.stringify({name:"some name"}),
+            };
+            const expectedObject =
+                {name:"some name"};
 
             const extracted = extract(event as APIGatewayProxyEventV2WithJWTAuthorizer, schema)
             expect(extracted).toEqual(expectedObject);
